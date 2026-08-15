@@ -1,0 +1,59 @@
+# Workflow Name
+name: Deploy to GitHub Pages
+
+# Triggered only when there is a push (new code) directly to the 'main' or 'master' branch
+on:
+  push:
+    branches: [ "main", "master" ]
+
+# Configures the necessary permissions for GitHub Actions to 
+# create and publish the static site on GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Ensures that only one deployment runs at a time.
+# If you make two commits very quickly, it cancels the first one to publish only the latest.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Job 1: Build (Compile the React/Vite project)
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        # This command generates the 'dist' folder containing the optimized code for the browser
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Sets the 'dist' folder as the content to be sent to GitHub Pages
+          path: './dist'
+
+  # Job 2: Deploy (Publish the project to GitHub Pages)
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build # Ensures this only publishes if the previous build (Job 1) had no errors
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

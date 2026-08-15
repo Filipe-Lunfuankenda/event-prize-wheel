@@ -1,0 +1,40 @@
+# Workflow Name
+name: Continuous Integration (CI)
+
+# Define the events that trigger this workflow
+on:
+  # Triggers whenever there is a new push (commit) on the main branch
+  push:
+    branches: [ "main", "master" ]
+  # Triggers whenever a Pull Request is opened against the main branch
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-lint:
+    # The operating system of the server where the tasks will run
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your code from GitHub to the virtual machine
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install and configure Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # Use cache to speed up future installations
+
+      # 3. Install the exact project dependencies listed in package-lock.json
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Run the linter to check for formatting errors or bad code
+      - name: Run Linter
+        run: npm run lint
+
+      # 5. Test if the project builds perfectly (simulating production build)
+      - name: Build project
+        run: npm run build

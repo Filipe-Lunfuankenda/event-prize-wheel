@@ -1,0 +1,23 @@
+# Dependabot Configuration
+# This GitHub tool automatically looks for outdated packages in your project
+# and creates Pull Requests to update them, keeping the code secure and modern.
+
+version: 2
+updates:
+  # 1. Keep NPM packages (JavaScript/Node) updated (e.g., React, Vite, Framer Motion)
+  - package-ecosystem: "npm"
+    # Directory where the 'package.json' file is located (project root)
+    directory: "/"
+    # How often GitHub should check for new versions
+    schedule:
+      interval: "weekly"
+    # Labels automatically added to the generated Pull Requests
+    labels:
+      - "dependencies"
+      - "dependabot"
+
+  # 2. Keep GitHub Actions (the workflows created in .github/workflows) updated
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
