@@ -1,0 +1,32 @@
+{
+  "short_name": "Prize Wheel",
+  "name": "Event Prize Wheel",
+  "description": "Spin the wheel and win prizes at your next tech event!",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "64x64"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0a192f",
+  "background_color": "#0a192f",
+  "categories": ["entertainment", "games"],
+  "lang": "pt"
+}

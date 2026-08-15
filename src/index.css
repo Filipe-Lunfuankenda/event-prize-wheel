@@ -1,0 +1,168 @@
+/**
+ * Global Styles and Tailwind Directives
+ * This file defines the core CSS variables, Tailwind configurations, 
+ * and custom animations used throughout the application.
+ */
+
+/* Import the Inter font family from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Inject Tailwind's base styles, component classes, and utility classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* 
+    Light Mode CSS Variables (Default Theme)
+    These variables dictate the exact colors for backgrounds, text, borders, and UI elements.
+    They are defined in HSL format for seamless integration with Tailwind's opacity modifiers.
+  */
+  :root {
+    --font-inter: 'Inter', sans-serif;
+    --background: 213 56% 11%;      /* Very dark blue, almost black */
+    --foreground: 210 40% 98%;      /* Off-white text */
+    --card: 213 56% 14%;            /* Slightly lighter blue for cards */
+    --card-foreground: 210 40% 98%;
+    --popover: 213 56% 14%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;         /* Bright blue accent */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 213 56% 18%;       /* Muted blue background for secondary elements */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 213 56% 18%;
+    --muted-foreground: 215 20% 65%; /* Grayish blue for subtle text */
+    --accent: 187 92% 69%;          /* Cyan accent (used in gradients) */
+    --accent-foreground: 213 56% 11%;
+    --destructive: 0 84.2% 60.2%;   /* Red for errors/alerts */
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 25% 22%;          /* Subtle borders */
+    --input: 215 25% 22%;
+    --ring: 217 91% 60%;            /* Focus ring color */
+    
+    /* Chart colors (if shadcn/ui charts are used) */
+    --chart-1: 217 91% 60%;
+    --chart-2: 187 92% 69%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    
+    --radius: 0.75rem;              /* Base border-radius for rounded corners */
+    
+    /* Sidebar specific variables */
+    --sidebar-background: 213 56% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 213 56% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  /* 
+    Dark Mode CSS Variables 
+    Activated when the `.dark` class is present. Currently mirrors the light theme 
+    heavily since the entire app is designed as a dark "cyber" theme by default.
+  */
+  .dark {
+    --background: 213 56% 11%;
+    --foreground: 210 40% 98%;
+    --card: 213 56% 14%;
+    --card-foreground: 210 40% 98%;
+    --popover: 213 56% 14%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 213 56% 18%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 213 56% 18%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 187 92% 69%;
+    --accent-foreground: 213 56% 11%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 217 91% 60%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 187 92% 69%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 213 56% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 213 56% 18%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 215 25% 22%;
+    --sidebar-ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  /* Apply border colors globally and ensure outline rings inherit the correct color */
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  /* Apply global background, text color, and default typography to the body */
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+/* 
+  Custom Pattern Backgrounds
+  Creates a subtle grid overlay for a "tech" or "blueprint" aesthetic.
+*/
+.bg-grid-white {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+.bg-grid-slate {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+}
+
+/* 
+  Custom Floating Animations
+  Used to make elements (like logos or icons) gently bob up and down.
+*/
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+.animate-float-delayed {
+  animation: float 6s ease-in-out 3s infinite;
+}
+
+/* 
+  Custom Clip Path
+  Creates an angled cut-off effect for specific UI components.
+*/
+.clip-path-slant {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+/* 
+  Custom Scrollbar Styles (Webkit browsers only - Chrome, Safari, Edge)
+  Replaces the default blocky scrollbar with a sleek, themed, minimal scrollbar.
+*/
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(213, 56%, 11%); /* Matches main background */
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(217, 91%, 60%); /* Bright blue thumb */
+  border-radius: 3px;
+}
