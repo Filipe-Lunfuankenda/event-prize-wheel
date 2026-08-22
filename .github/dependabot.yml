@@ -1,23 +1,26 @@
 # Dependabot Configuration
-# This GitHub tool automatically looks for outdated packages in your project
-# and creates Pull Requests to update them, keeping the code secure and modern.
+# This file configures regular version updates for your project.
+# NOTE: Security updates (vulnerabilities and leaks) are automatically triggered
+# by GitHub as soon as a threat is discovered, regardless of the schedule below!
 
 version: 2
 updates:
-  # 1. Keep NPM packages (JavaScript/Node) updated (e.g., React, Vite, Framer Motion)
+  # 1. Keep NPM packages (JavaScript/Node) updated
   - package-ecosystem: "npm"
-    # Directory where the 'package.json' file is located (project root)
     directory: "/"
-    # How often GitHub should check for new versions
     schedule:
+      # Checks for non-security updates once a week
       interval: "weekly"
-    # Labels automatically added to the generated Pull Requests
+    # Limits the number of open automated Pull Requests to avoid clutter
+    open-pull-requests-limit: 10
     labels:
       - "dependencies"
       - "dependabot"
+      - "security" # Helps categorize updates related to stability
 
-  # 2. Keep GitHub Actions (the workflows created in .github/workflows) updated
+  # 2. Keep GitHub Actions workflows updated
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 5
